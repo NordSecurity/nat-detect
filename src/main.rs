@@ -2,19 +2,19 @@ use simple_logger::SimpleLogger;
 use nat_detect::nat_detect_with_servers;
 use clap::Parser;
 use log::LevelFilter;
-use rand::Rng;
+use rand::RngExt;
 
 #[derive(Parser, Debug)]
-#[clap(author, version, about, long_about = None)]
+#[command(author, version, about, long_about = None)]
 struct Args {
 
-    #[clap(short, long,help="default use https://github.com/pradt2/always-online-stun")]
+    #[arg(short, long, help = "default use https://github.com/pradt2/always-online-stun")]
     stun_servers: Option<Vec<String>>,
 
-    #[clap(short='c', long, default_value="20")]
+    #[arg(short = 'c', long, default_value = "20")]
     stun_servers_count: usize,
 
-    #[clap(short='v', long="verbose")]
+    #[arg(short = 'v', long = "verbose")]
     verbose: bool,
 
 }
@@ -32,10 +32,10 @@ pub async fn main(){
     let vec = args.stun_servers.unwrap_or_else(|| {
         let vec: Vec<String> = include_str!("valid_ipv4s.txt").lines().map(|e|e.trim().to_string()).collect();
         // select 10 server randomly
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         let mut new_vec = Vec::new();
         for _ in 0..args.stun_servers_count {
-            let stun_server = vec[rng.gen_range(0..vec.len())].to_string();
+            let stun_server = vec[rng.random_range(0..vec.len())].to_string();
             new_vec.push(stun_server);
         }
         new_vec
