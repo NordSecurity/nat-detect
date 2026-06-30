@@ -12,10 +12,10 @@ repository = "https://github.com/blazood/nat-detect"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tokio = { version = "1.17", features = ["full"] }
+tokio = { version = "1.52", features = ["full"] }
 stun_codec_blazh= { version="0.1.13" }
 log = "0.4"
 simple_logger = "5.2"
-clap = { version = "4.5.60", features = ["derive"] }
+clap = { version = "4.6.1", features = ["derive"] }
 rand = "0.10.1"
 bytecodec = "0.4.15"
